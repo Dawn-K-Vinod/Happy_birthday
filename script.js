@@ -1,4 +1,4 @@
 function playMusic() {
-       const audio = new Audio('https://www.bensound.com/bensound-music/bensound-sunny.mp3');
-       audio.play();
-   }
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // Replace with a Happy Birthday song URL
+    audio.play();
+}
