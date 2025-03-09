@@ -83,6 +83,16 @@
             font-size: 1.5em;
             text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
+
+        @media (max-width: 768px) {
+            .birthday-text {
+                font-size: 4em; /* Smaller text for mobile */
+            }
+            #message {
+                font-size: 1em; /* Reduce message size */
+                bottom: 10px;   /* Move slightly up to avoid edge overlap */
+            }
+        }
     </style>
 </head>
 <body>
@@ -98,7 +108,7 @@
         // Particle.js configuration
         particlesJS('particles-js', {
             particles: {
-                number: { value: 200 },
+                number: { value: window.innerWidth < 768 ? 50 : 200 },
                 color: { value: '#ffffff' },
                 shape: { type: 'circle' },
                 opacity: { value: 0.5 },
