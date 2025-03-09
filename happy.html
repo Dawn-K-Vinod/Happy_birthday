@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Birthday Celebration!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .birthday-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8em;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 2s linear infinite, float 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            z-index: 2;
+        }
+
+        @keyframes shine {
+            0% { background-position: -500%; }
+            100% { background-position: 500%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -55%); }
+            50% { transform: translate(-50%, -45%); }
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            animation: explode 1s ease-out;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(20); opacity: 0; }
+        }
+
+        .balloon {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            border-radius: 50%;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        #message {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <h1 class="birthday-text">HAPPY BIRTHDAY! DAWN</h1>
+    <div id="message">Made with ❤️ - Keep shining bright!</div>
+    <audio id="birthdayAudio">
+        <source src="https://dawn-k-vinod.github.io/Happy_birthday/happy.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 200 },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+
+                modes: {
+                    repulse: { // MUST ADD THIS ATTRACT CONFIG
+                        distance: 50,  // Attraction radius
+                        duration: 0.4,
+                        speed: 3,       // Movement speed (1 = normal)
+                        factor: 2,      // Attraction force multiplier
+                        easing: 'ease-out'
+                    },
+                    push: {
+                        particles_nb: 4 // Keep existing click behavior
+                    }
+                }       
+            }
+        });
+
+        // Create floating balloons
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * window.innerWidth + 'px';
+            balloon.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            balloon.style.animationDuration = Math.random() * 10 + 5 + 's';
+            document.body.appendChild(balloon);
+
+            setTimeout(() => balloon.remove(), 15000);
+        }
+
+        setInterval(createBalloon, 1500);
+
+        // Fireworks effect on click
+        document.addEventListener('click', function(e) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = e.clientX + 'px';
+            firework.style.top = e.clientY + 'px';
+            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 1000);
+
+            // Play audio
+            const audio = document.getElementById('birthdayAudio');
+            audio.play();
+        });
+
+        // Text entrance animation
+        gsap.from(".birthday-text", {
+            duration: 2,
+            scale: 0.5,
+            opacity: 0,
+            rotation: 360,
+            ease: "elastic.out(1, 0.3)"
+        });
+    </script>
+</body>
+</html>
