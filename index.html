@@ -150,6 +150,9 @@
         function createBalloon() {
             const balloon = document.createElement('div');
             balloon.className = 'balloon';
+            const isMobile = window.innerWidth < 768;
+            balloon.style.width = isMobile ? '50px' : '100px';    /* Smaller on mobile */
+            balloon.style.height = isMobile ? '75px' : '150px';   /* Smaller on mobile */
             balloon.style.left = Math.random() * window.innerWidth + 'px';
             balloon.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
             balloon.style.animationDuration = Math.random() * 10 + 5 + 's';
@@ -158,7 +161,8 @@
             setTimeout(() => balloon.remove(), 15000);
         }
 
-        setInterval(createBalloon, 1500);
+        const balloonInterval = window.innerWidth < 768 ? 3000 : 1500; /* Slower on mobile */
+        setInterval(createBalloon, balloonInterval);
 
         // Fireworks effect on click
         document.addEventListener('click', function(e) {
